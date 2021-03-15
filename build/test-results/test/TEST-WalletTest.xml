@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WalletTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-03-14T11:51:38" hostname="DESKTOP-AB0UK2U" time="0.044">
+<testsuite name="WalletTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-03-15T05:59:06" hostname="DESKTOP-AB0UK2U" time="0.025">
   <properties/>
-  <testcase name="checkIfOneDollarEqualsEquivalentRupees()" classname="WalletTest" time="0.04"/>
-  <testcase name="checkIfOneRupeeEqualsEquivalentDollars()" classname="WalletTest" time="0.002"/>
+  <testcase name="depositCurrencyAsZeroValuedCurrency()" classname="WalletTest" time="0.02"/>
+  <testcase name="depositCurrencyAsRupees()" classname="WalletTest" time="0.002"/>
+  <testcase name="depositCurrencyAsDollars()" classname="WalletTest" time="0.001"/>
+  <testcase name="depositCurrencyAsNegativeValuedCurrency()" classname="WalletTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

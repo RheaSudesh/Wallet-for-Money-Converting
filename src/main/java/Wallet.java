@@ -1,17 +1,27 @@
 public class Wallet {
 
-    String currencyName1 = "Rupees";
-    String currencyName2 = "Dollars";
-    double currencyValue1;
-    double currencyValue2;
+    Currency oneRupee = new Currency("Rupees", 0);
+    Currency oneDollar = new Currency("Dollars", 0);
+
     final double dollarToRupeeConverstionRate = 78.84;
 
-    public double convertToEquivalentCurrencyValue(String currencyType, double currencyValue) {
-
-        if(currencyType.equalsIgnoreCase( currencyName1 ))
-            return currencyValue / dollarToRupeeConverstionRate;
+    public double getCurrencyvalue(String name) {
+        if (name.equalsIgnoreCase(oneRupee.name))
+            return oneRupee.value;
         else
-            return currencyValue * dollarToRupeeConverstionRate;
+            return oneDollar.value;
+    }
+
+    public double depositCurrency(String currencyType, double currencyValue) {
+        if (currencyValue <= 0)
+            throw new IllegalArgumentException("Currency values do not support Zero or Negative values");
+        else {
+            if (currencyType.equalsIgnoreCase(oneRupee.name))
+                oneRupee.value += currencyValue;
+            else if (currencyType.equalsIgnoreCase(oneDollar.name))
+                oneDollar.value += currencyValue;
+        }
+        return getCurrencyvalue(currencyType);
     }
 
 }

@@ -1,2 +1,4 @@
+CurrencyTest.java
+ CurrencyTest
 WalletTest.java
  WalletTest
