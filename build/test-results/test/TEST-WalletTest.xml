@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WalletTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-03-15T05:59:06" hostname="DESKTOP-AB0UK2U" time="0.025">
+<testsuite name="WalletTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-15T06:33:02" hostname="DESKTOP-AB0UK2U" time="0.02">
   <properties/>
-  <testcase name="depositCurrencyAsZeroValuedCurrency()" classname="WalletTest" time="0.02"/>
-  <testcase name="depositCurrencyAsRupees()" classname="WalletTest" time="0.002"/>
-  <testcase name="depositCurrencyAsDollars()" classname="WalletTest" time="0.001"/>
-  <testcase name="depositCurrencyAsNegativeValuedCurrency()" classname="WalletTest" time="0.001"/>
+  <testcase name="withdrawCurrencyMoreThanBalance()" classname="WalletTest" time="0.02"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
