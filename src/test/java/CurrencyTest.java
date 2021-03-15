@@ -1,24 +1,17 @@
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-
 class CurrencyTest {
 
-    Currency oneRupee = new Currency("Rupees", 78.84);
-    Currency oneDollar = new Currency("Dollars", 1);
+    Currency Rupees = new Currency("Rupees", 78.84);
+    Currency Dollars = new Currency("Dollars", 1);
 
     @Test
     public void testDoesNotThrowExceptionForValidCurrency() {
         assertDoesNotThrow(() -> new Currency("Dollars", 3));
     }
-
-//    @Test
-//    public void testThrowsExceptionForZeroValuedCurrency() {
-//        assertThrows(IllegalArgumentException.class, () -> new Currency("Dollars", 0));
-//    }
 
     @Test
     public void testThrowsExceptionForNegativeValuedCurrency() {
@@ -32,26 +25,27 @@ class CurrencyTest {
 
     @Test
     public void testDollarEquivalentToRupees() {
-        assertEquals(true, oneRupee.checkIfOnedollarEquals78_84Rupees(oneDollar, oneRupee));
+        assertEquals(true, Rupees.checkIfDollarsEquals78_84Rupees(Dollars, Rupees));
     }
-
 
     @Test
     public void getEquivalentRupeesForGivenDollars() {
-        double expectedValue = 78.84;
+        String currencyType = "Rupees";
 
-        double actualValue = oneDollar.convertToEquivalentRupeeValue();
+        double expectedValue = 78.84;
+        double actualValue = Dollars.convertToEquivalentCurrencyValue(currencyType);
+
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void getEquivalentDollarsForGivenRupee() {
+        String currencyType = "Dollars";
 
         double expectedValue = 1;
+        double actualValue = Rupees.convertToEquivalentCurrencyValue(currencyType);
 
-        double actualValue = oneRupee.convertToEquivalentRupeeValue();
         assertEquals(expectedValue, actualValue);
     }
-
 
 }

@@ -1,60 +1,64 @@
 
 public class Wallet {
 
-    Currency oneRupee = new Currency("Rupees", 0);
-    Currency oneDollar = new Currency("Dollars", 0);
+    Currency Rupees = new Currency("Rupees", 0);
+    Currency Dollars = new Currency("Dollars", 0);
 
-    final double dollarToRupeeConverstionRate = 78.84;
+    final double dollarRupeeConversationRate = 78.84;
 
-    public double getCurrencyvalue(String name) {
-        if (name.equalsIgnoreCase(oneRupee.name))
-            return oneRupee.value;
+    public double getCurrencyValue(String name) {
+        if (name.equalsIgnoreCase(Rupees.name))
+            return Rupees.value;
+        else if(name.equalsIgnoreCase(Dollars.name))
+            return Dollars.value;
         else
-            return oneDollar.value;
+            return 0.0;
     }
 
     public double depositCurrency(String currencyType, double currencyValue) {
         if (currencyValue <= 0)
             throw new IllegalArgumentException("Currency values do not support Zero or Negative values");
         else {
-            if (currencyType.equalsIgnoreCase(oneRupee.name))
-                oneRupee.value += currencyValue;
-            else if (currencyType.equalsIgnoreCase(oneDollar.name))
-                oneDollar.value += currencyValue;
+            if (currencyType.equalsIgnoreCase(Rupees.name))
+                Rupees.value += currencyValue;
+            else if (currencyType.equalsIgnoreCase(Dollars.name))
+                Dollars.value += currencyValue;
         }
-        return getCurrencyvalue(currencyType);
+        return getCurrencyValue(currencyType);
     }
 
     public double withdrawCurrency(String currencyType, double currencyValue) {
-        if (currencyValue > moneyInWallet(currencyType) || currencyValue<=0)
+        if (currencyValue > moneyInWallet(currencyType) || currencyValue <= 0)
             throw new ArithmeticException("Insufficient Balance");
         else {
-            if (currencyType.equalsIgnoreCase(oneRupee.name)) {
-                if (currencyValue <= oneRupee.value)
-                    oneRupee.value -= currencyValue;
+            if (currencyType.equalsIgnoreCase(Rupees.name)) {
+                if (currencyValue <= Rupees.value)
+                    Rupees.value -= currencyValue;
                 else {
-                    oneDollar.value -= (currencyValue - oneRupee.value) / dollarToRupeeConverstionRate;
-                    oneRupee.value = 0;
+                    Dollars.value -= (currencyValue - Rupees.value) / dollarRupeeConversationRate;
+                    Rupees.value = 0;
                 }
 
-            } else if (currencyType.equalsIgnoreCase(oneDollar.name)) {
-                if (currencyValue <= oneDollar.value)
-                    oneDollar.value -= currencyValue;
+            } else if (currencyType.equalsIgnoreCase(Dollars.name)) {
+                if (currencyValue <= Dollars.value)
+                    Dollars.value -= currencyValue;
                 else {
-                    oneRupee.value -= (currencyValue - oneDollar.value) * dollarToRupeeConverstionRate;
-                    oneDollar.value = 0;
+                    Rupees.value -= (currencyValue - Dollars.value) * dollarRupeeConversationRate;
+                    Dollars.value = 0;
                 }
             }
 
         }
-        return getCurrencyvalue(currencyType);
+        return getCurrencyValue(currencyType);
     }
 
     public double moneyInWallet(String currencyType) {
         if (currencyType.equalsIgnoreCase("Rupees"))
-            return (double) (oneRupee.value + oneDollar.value * dollarToRupeeConverstionRate);
+            return (double) (Rupees.value + Dollars.value * dollarRupeeConversationRate);
+
         else if (currencyType.equalsIgnoreCase("Dollars"))
-            return (double) (oneDollar.value + oneRupee.value / dollarToRupeeConverstionRate);
+            return (double) (Dollars.value + Rupees.value / dollarRupeeConversationRate);
+
         else
             return 0.0;
     }

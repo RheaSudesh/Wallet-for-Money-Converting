@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WalletTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-15T06:33:02" hostname="DESKTOP-AB0UK2U" time="0.02">
+<testsuite name="WalletTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2021-03-15T07:06:07" hostname="DESKTOP-AB0UK2U" time="0.031">
   <properties/>
-  <testcase name="withdrawCurrencyMoreThanBalance()" classname="WalletTest" time="0.02"/>
+  <testcase name="testWithdrawCurrencyAsNegativeValuedCurrency()" classname="WalletTest" time="0.019"/>
+  <testcase name="testWithdrawCurrencyAsZeroValuedCurrency()" classname="WalletTest" time="0.0"/>
+  <testcase name="testWithdrawCurrencyAsDollars()" classname="WalletTest" time="0.001"/>
+  <testcase name="testWithdrawCurrencyAsDollarsWhenInsuffientAmountOfDollars()" classname="WalletTest" time="0.0"/>
+  <testcase name="testDepositCurrencyAsZeroValuedCurrency()" classname="WalletTest" time="0.0"/>
+  <testcase name="testDepositCurrencyAsRupees()" classname="WalletTest" time="0.0"/>
+  <testcase name="testCheckBalanceAsRupees()" classname="WalletTest" time="0.001"/>
+  <testcase name="testWithdrawCurrencyAsRupees()" classname="WalletTest" time="0.0"/>
+  <testcase name="testWithdrawCurrencyMoreThanBalance()" classname="WalletTest" time="0.001"/>
+  <testcase name="testDepositCurrencyAsDollars()" classname="WalletTest" time="0.0"/>
+  <testcase name="testWithdrawCurrencyAsRupeesWhenInsuffientAmountOfRupees()" classname="WalletTest" time="0.0"/>
+  <testcase name="testCheckBalanceAsDollars()" classname="WalletTest" time="0.001"/>
+  <testcase name="testDepositCurrencyAsNegativeValuedCurrency()" classname="WalletTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -15,18 +15,18 @@ public class Currency {
         }
     }
 
-    public static boolean checkIfOnedollarEquals78_84Rupees(Currency oneDollar, Currency oneRupee) {
-        if (oneDollar.name.equalsIgnoreCase("Dollars") && oneRupee.name.equalsIgnoreCase("Rupees"))
-            if (Math.floor(oneRupee.value / currencyConvertionRate) == oneDollar.value) {
+    public static boolean checkIfDollarsEquals78_84Rupees(Currency Dollars, Currency Rupees) {
+        if (Dollars.name.equalsIgnoreCase("Dollars") && Rupees.name.equalsIgnoreCase("Rupees"))
+            if (Math.floor(Rupees.value / currencyConvertionRate) == Dollars.value) {
                 return true;
             }
         return false;
     }
 
-    public double convertToEquivalentRupeeValue() {
-        if(this.name.equalsIgnoreCase( "Rupees" ))
+    public double convertToEquivalentCurrencyValue(String targetCurrencyType) {
+        if(this.name.equalsIgnoreCase( "Rupees" ) && targetCurrencyType.equalsIgnoreCase("Dollars"))
             return this.value / currencyConvertionRate;
-        else if(this.name.equalsIgnoreCase( "Dollars" ))
+        else if(this.name.equalsIgnoreCase( "Dollars" ) && targetCurrencyType.equalsIgnoreCase("Rupees"))
             return this.value * currencyConvertionRate;
         else
             return value;
