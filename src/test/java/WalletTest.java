@@ -8,144 +8,129 @@ class WalletTest {
 
     @Test
     public void testDepositCurrencyAsRupees() {
-        double currencyValue = 120;
-        String currencyType = "Rupees";
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 120);
 
         double expectedValue = 120;
-        double actualValue = (double) wallet.depositCurrency(currencyType, currencyValue);
+        double actualValue = (double) wallet.depositCurrency(amountToDepositAsRupees);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void testDepositCurrencyAsDollars() {
-        double currencyValue = 3;
-        String currencyType = "Dollars";
+        Currency  amountToDepositAsDollars= new Currency( CurrencyType.DOLLARS , 3);
 
         double expectedValue = 3;
-        double actualValue = (double) wallet.depositCurrency(currencyType, currencyValue);
+        double actualValue = (double) wallet.depositCurrency(amountToDepositAsDollars);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
-    public void testDepositCurrencyAsZeroValuedCurrency() {
-        double currencyValue = 0;
-        String currencyType = "Rupees";
+    public void testThrowsExceptionDepositZeroValuedCurrency() {
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 0);
 
-        assertThrows(IllegalArgumentException.class, () -> wallet.depositCurrency(currencyType, currencyValue));
-    }
-
-    @Test
-    public void testDepositCurrencyAsNegativeValuedCurrency() {
-        double currencyValue = -12;
-        String currencyType = "Rupees";
-
-        assertThrows(IllegalArgumentException.class, () -> wallet.depositCurrency(currencyType, currencyValue));
+        assertThrows(IllegalArgumentException.class, () -> wallet.depositCurrency(amountToDepositAsRupees));
     }
 
     @Test
     public void testWithdrawCurrencyAsRupees() {
-        double withdrawRupees = 30;
-        String currencyType = "Rupees";
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 120);
+        Currency amountToWithdrawAsRupees  = new Currency( CurrencyType.RUPEES , 30);
 
-        wallet.depositCurrency(currencyType, 120);
+        wallet.depositCurrency(amountToDepositAsRupees);
 
         double expectedValue = 90;
-        double actualValue = (double) wallet.withdrawCurrency(currencyType, withdrawRupees);
+        double actualValue = (double) wallet.withdrawCurrency(amountToWithdrawAsRupees);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void testWithdrawCurrencyAsDollars() {
-        double withdrawDollars = 3;
-        String currencyType = "dollars";
+        Currency amountToDepositAsDollars = new Currency( CurrencyType.DOLLARS , 4);
+        Currency amountToWithdrawAsDollars  = new Currency( CurrencyType.DOLLARS , 3);
 
-        wallet.depositCurrency(currencyType, 4);
+        wallet.depositCurrency(amountToDepositAsDollars);
 
         double expectedValue = 1;
-        double actualValue = (double) wallet.withdrawCurrency(currencyType, withdrawDollars);
+        double actualValue = (double) wallet.withdrawCurrency(amountToWithdrawAsDollars);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
-    public void testWithdrawCurrencyAsDollarsWhenInsuffientAmountOfDollars() {
-        double withdrawDollars = 5;
-        String currencyType = "dollars";
+    public void testWithdrawCurrencyAsDollarsWhenInsufficientAmountOfDollars() {
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 74.85);
+        Currency amountToDepositAsDollars = new Currency( CurrencyType.DOLLARS , 4);
+        Currency amountToWithdrawAsDollars  = new Currency( CurrencyType.DOLLARS , 5);
 
-        wallet.depositCurrency("Rupees", 78.84);
-        wallet.depositCurrency("Dollars", 4);
+        wallet.depositCurrency(amountToDepositAsRupees);
+        wallet.depositCurrency(amountToDepositAsDollars);
 
         double expectedValue = 0;
-        double actualValue = (double) wallet.withdrawCurrency(currencyType, withdrawDollars);
+        double actualValue = (double) wallet.withdrawCurrency(amountToWithdrawAsDollars);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
-    public void testWithdrawCurrencyAsRupeesWhenInsuffientAmountOfRupees() {
-        double withdrawRupees = 78.84 * 2;
-        String currencyType = "rupees";
+    public void testWithdrawCurrencyAsRupeesWhenInsufficientAmountOfRupees() {
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 74.85);
+        Currency amountToDepositAsDollars = new Currency( CurrencyType.DOLLARS , 1);
+        Currency amountToWithdrawAsRupees  = new Currency( CurrencyType.RUPEES , 149.7);
 
-        wallet.depositCurrency("Rupees", 78.84);
-        wallet.depositCurrency("Dollars", 1);
+        wallet.depositCurrency(amountToDepositAsRupees);
+        wallet.depositCurrency(amountToDepositAsDollars);
 
         double expectedValue = 0;
-        double actualValue = (double) wallet.withdrawCurrency(currencyType, withdrawRupees);
+        double actualValue = (double) wallet.withdrawCurrency(amountToWithdrawAsRupees);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
-    public void testWithdrawCurrencyAsNegativeValuedCurrency() {
-        double currencyValue = -12;
-        String currencyType = "Rupees";
+    public void testThrowsExceptionWithdrawZeroValuedCurrency() {
+        Currency amountWithdrawn  = new Currency( CurrencyType.RUPEES , 0);
 
-        assertThrows(ArithmeticException.class, () -> wallet.withdrawCurrency(currencyType, currencyValue));
+        assertThrows(IllegalArgumentException.class, () -> wallet.withdrawCurrency(amountWithdrawn));
     }
 
     @Test
-    public void testWithdrawCurrencyAsZeroValuedCurrency() {
-        double currencyValue = 0;
-        String currencyType = "Rupees";
+    public void testThrowsExceptionWithdrawMoreThanBalance() {
 
-        assertThrows(ArithmeticException.class, () -> wallet.withdrawCurrency(currencyType, currencyValue));
-    }
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 20);
+        Currency amountToWithdrawAsRupees  = new Currency( CurrencyType.RUPEES , 50);
 
-    @Test
-    public void testWithdrawCurrencyMoreThanBalance() {
-        double withdrawRupees = 50;
-        String currencyType = "rupees";
+        wallet.depositCurrency(amountToDepositAsRupees);
 
-        wallet.depositCurrency("Rupees", 20);
-
-        assertThrows(ArithmeticException.class, () -> wallet.withdrawCurrency(currencyType, withdrawRupees));
+        assertThrows(ArithmeticException.class, () -> wallet.withdrawCurrency(amountToWithdrawAsRupees));
     }
 
     @Test
     public void testCheckBalanceAsDollars() {
-        String currencyType = "doLLars";
+        Currency amountToDepositAsRupees = new Currency( CurrencyType.RUPEES , 74.85);
+        Currency amountToDepositAsDollars = new Currency( CurrencyType.DOLLARS , 1);
 
-        wallet.depositCurrency("Rupees", 78.84);
-        wallet.depositCurrency("Dollars", 1);
+        wallet.depositCurrency(amountToDepositAsRupees);
+        wallet.depositCurrency(amountToDepositAsDollars);
 
         double expectedValue = 2;
-        double actualValue = (double) wallet.moneyInWallet(currencyType);
+        double actualValue = (double) wallet.checkBalanceForCurrencyType(CurrencyType.DOLLARS);
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void testCheckBalanceAsRupees() {
-        String currencyType = "ruPees";
+        Currency amountToDepositAsRupees = new Currency(CurrencyType.RUPEES, 74.85);
+        Currency amountToDepositAsDollars = new Currency(CurrencyType.DOLLARS, 1);
 
-        wallet.depositCurrency("Rupees", 78.84);
-        wallet.depositCurrency("Dollars", 1);
+        wallet.depositCurrency(amountToDepositAsRupees);
+        wallet.depositCurrency(amountToDepositAsDollars);
 
-        double expectedValue = 157.68;
-        double actualValue = (double) wallet.moneyInWallet(currencyType);
+        double expectedValue = 149.7;
+        double actualValue = (double) wallet.checkBalanceForCurrencyType(CurrencyType.RUPEES);
 
         assertEquals(expectedValue, actualValue);
     }

@@ -1,3 +1,5 @@
+CurrencyType.java
+ CurrencyType
 Currency.java
  Currency
 Wallet.java

@@ -1,49 +1,43 @@
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class CurrencyTest {
 
-    Currency Rupees = new Currency("Rupees", 78.84);
-    Currency Dollars = new Currency("Dollars", 1);
+    Currency Rupees = new Currency(CurrencyType.RUPEES, 74.85);
+    Currency Dollars = new Currency(CurrencyType.DOLLARS, 1);
 
-    @Test
-    public void testDoesNotThrowExceptionForValidCurrency() {
-        assertDoesNotThrow(() -> new Currency("Dollars", 3));
-    }
 
     @Test
     public void testThrowsExceptionForNegativeValuedCurrency() {
-        assertThrows(IllegalArgumentException.class, () -> new Currency("Dollars", -2));
+        assertThrows(IllegalArgumentException.class, () -> new Currency(CurrencyType.DOLLARS, -2));
     }
 
     @Test
-    public void testThrowsExceptionForInvalidName() {
-        assertThrows(IllegalArgumentException.class, () -> new Currency("Paisa", 10));
+    public void testDoesNotThrowExceptionForValidCurrency() {
+        assertDoesNotThrow(() -> new Currency(CurrencyType.DOLLARS, 3));
     }
 
     @Test
-    public void testDollarEquivalentToRupees() {
-        assertEquals(true, Rupees.checkIfDollarsEquals78_84Rupees(Dollars, Rupees));
+    public void testOneDollarEquivalentInRupees() {
+        assertTrue( Currency.checkIfDollarsEquals78_84Rupees(Dollars, Rupees) );
     }
 
     @Test
     public void getEquivalentRupeesForGivenDollars() {
-        String currencyType = "Rupees";
-
-        double expectedValue = 78.84;
-        double actualValue = Dollars.convertToEquivalentCurrencyValue(currencyType);
+        double actualValue = Dollars.convertTo( CurrencyType.RUPEES.getCurrencyName());
+        double expectedValue = 74.85;
 
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void getEquivalentDollarsForGivenRupee() {
-        String currencyType = "Dollars";
-
+        double actualValue = Rupees.convertTo( CurrencyType.DOLLARS.getCurrencyName());
         double expectedValue = 1;
-        double actualValue = Rupees.convertToEquivalentCurrencyValue(currencyType);
 
         assertEquals(expectedValue, actualValue);
     }

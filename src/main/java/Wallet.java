@@ -1,65 +1,33 @@
-
 public class Wallet {
 
-    Currency Rupees = new Currency("Rupees", 0);
-    Currency Dollars = new Currency("Dollars", 0);
+    Currency totalAmountInDollars = new Currency(CurrencyType.DOLLARS, 0);
+    String dollars = CurrencyType.DOLLARS.getCurrencyName();
+    double currencyConverstionRate = 74.85;
 
-    final double dollarRupeeConversationRate = 78.84;
-
-    public double getCurrencyValue(String name) {
-        if (name.equalsIgnoreCase(Rupees.name))
-            return Rupees.value;
-        else if(name.equalsIgnoreCase(Dollars.name))
-            return Dollars.value;
-        else
-            return 0.0;
-    }
-
-    public double depositCurrency(String currencyType, double currencyValue) {
-        if (currencyValue <= 0)
-            throw new IllegalArgumentException("Currency values do not support Zero or Negative values");
+    public double depositCurrency(Currency currency) {
+        if(currency.value == 0) throw new IllegalArgumentException(("Depositing of Zero valued currency is not supported"));
         else {
-            if (currencyType.equalsIgnoreCase(Rupees.name))
-                Rupees.value += currencyValue;
-            else if (currencyType.equalsIgnoreCase(Dollars.name))
-                Dollars.value += currencyValue;
+            totalAmountInDollars.value += currency.convertTo(dollars);
+            return checkBalanceForCurrencyType(currency.name);
         }
-        return getCurrencyValue(currencyType);
     }
 
-    public double withdrawCurrency(String currencyType, double currencyValue) {
-        if (currencyValue > moneyInWallet(currencyType) || currencyValue <= 0)
-            throw new ArithmeticException("Insufficient Balance");
+    public double withdrawCurrency(Currency currency) {
+        double withdrawalAmountInDollars = currency.convertTo(dollars);
+
+        if (withdrawalAmountInDollars == 0) throw new IllegalArgumentException("Withdrawal of Zero valued currency is not supported");
+        else if (withdrawalAmountInDollars > totalAmountInDollars.value) throw new ArithmeticException("Insufficient Balance");
         else {
-            if (currencyType.equalsIgnoreCase(Rupees.name)) {
-                if (currencyValue <= Rupees.value)
-                    Rupees.value -= currencyValue;
-                else {
-                    Dollars.value -= (currencyValue - Rupees.value) / dollarRupeeConversationRate;
-                    Rupees.value = 0;
-                }
-
-            } else if (currencyType.equalsIgnoreCase(Dollars.name)) {
-                if (currencyValue <= Dollars.value)
-                    Dollars.value -= currencyValue;
-                else {
-                    Rupees.value -= (currencyValue - Dollars.value) * dollarRupeeConversationRate;
-                    Dollars.value = 0;
-                }
-            }
-
+            totalAmountInDollars.value -= withdrawalAmountInDollars;
+            return checkBalanceForCurrencyType(currency.name);
         }
-        return getCurrencyValue(currencyType);
+
     }
 
-    public double moneyInWallet(String currencyType) {
-        if (currencyType.equalsIgnoreCase("Rupees"))
-            return (double) (Rupees.value + Dollars.value * dollarRupeeConversationRate);
-
-        else if (currencyType.equalsIgnoreCase("Dollars"))
-            return (double) (Dollars.value + Rupees.value / dollarRupeeConversationRate);
-
+    public double checkBalanceForCurrencyType(CurrencyType currencyName) {
+        if (currencyName.getCurrencyName().equalsIgnoreCase("Rupees"))
+            return totalAmountInDollars.value * currencyConverstionRate;
         else
-            return 0.0;
+            return totalAmountInDollars.value ;
     }
 }
